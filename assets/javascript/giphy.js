@@ -3,9 +3,10 @@
 
 // giphyCreation)
 
+var thinkPeople= ["Elon Musk", "Albert Einstein"];
 
 // function giphyCreation (){
-    $("data-search").on("click", function() {
+    $(document).on("click",".search", function() {
     var data = $(this).data("search");
     var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + data +"&api_key=h51l8iqc2KlAyDT9bVZScMvEsFxayZDL&limit=10";
     console.log(queryUrl);
@@ -32,9 +33,9 @@
          }
 
         $("img").on("click", function( ) {
-            var imgState = $(this).data("state");
-            var animatedUrl = $(this).data("animated"); 
-            var stillUrl = $(this).data("still");
+            var imgState = $(this).attr("data-state");
+            var animatedUrl = $(this).attr("data-animated"); 
+            var stillUrl = $(this).attr("data-still");
             
         if (imgState === "still") {
                 $(this).attr("data-state", "animated");
@@ -46,7 +47,46 @@
         })})
     
     
+        function renderButtons() {
 
+            // Deleting the movie buttons prior to adding new movie buttons
+            // (this is necessary otherwise we will have repeat buttons)
+            $(".myButtons").empty();
+    
+            // Looping through the array of thinkPeople
+            for (var i = 0; i < thinkPeople.length; i++) {
+    
+              // Then dynamicaly generating buttons for each movie in the array.
+              // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
+              var a = $("<button>");
+              // Adding a class
+              a.addClass("search");
+              // Adding a data-attribute with a value of the movie at index i
+              a.attr("data-search", thinkPeople[i]);
+              // Providing the button's text with a value of the movie at index i
+              a.text(thinkPeople[i]);
+              // Adding the button to the HTML
+              $(".myButtons").append(a);
+            }
+          }
+    
+          // This function handles events where one button is clicked
+          $("#think").on("click", function(event) {
+            // event.preventDefault() prevents the form from trying to submit itself.
+            // We're using a form so that the user can hit enter instead of clicking the button if they want
+            event.preventDefault();
+    
+            // This line will grab the text from the input box
+            var movie = $("#thinkersInput").val().trim();
+            // The movie from the textbox is then added to our array
+            thinkPeople.push(movie);
+    
+            // calling renderButtons which handles the processing of our movie array
+            renderButtons();
+          });
+    
+          // Calling the renderButtons function at least once to display the initial list of movies
+          renderButtons();
 
 
 
