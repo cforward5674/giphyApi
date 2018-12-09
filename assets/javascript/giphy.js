@@ -1,18 +1,20 @@
-$(document).ready(function(){
-
-$(document).on("click","button",  giphyCreation)
+// $(document).ready(function(){
 
 
-function giphyCreation (){
+// giphyCreation)
+
+
+// function giphyCreation (){
+    $("data-search").on("click", function() {
     var data = $(this).data("search");
     var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + data +"&api_key=h51l8iqc2KlAyDT9bVZScMvEsFxayZDL&limit=10";
     console.log(queryUrl);
-    
+   
     $.ajax({
         url: queryUrl, 
         crossDomain: true,
         method: "GET"})
-       
+      
     .then(function(response) {
         console.log(response);
          for(var i = 0; i < response.data.length;i++) {
@@ -41,10 +43,8 @@ function giphyCreation (){
             $(this).attr("data-state", "still");
                 $(this).attr("src", stillUrl); }
             })
-        })
-    }
-
-})
+        })})
+    
     
 
 
